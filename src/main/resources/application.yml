@@ -1,0 +1,27 @@
+server:
+  port: 8790
+
+eureka:
+  client:
+
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: easy_route # 我们自定义的路由 ID，保持唯一
+          uri: lb://ORDER-SERVICE # 目标服务地址
+          predicates: # 路由条件，Predicate 接受一个输入参数，返回一个布尔值结果。该接口包含多种默认方法来将
+          - Path=/api/**
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
